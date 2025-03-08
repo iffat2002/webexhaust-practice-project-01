@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Image from "next/image";
+import { useState, useEffect } from "react";
 import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
 import Sidebar from "@/components/Sidebar";
@@ -12,6 +13,25 @@ const inter = Inter({
 });
 
 export default function Home() {
+  const [open,setOpen] = useState(false);
+  console.log("open", open)
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = "hidden"; 
+    } else {
+      document.body.style.overflow = "auto"; 
+    }
+    
+    return () => {
+      document.body.style.overflow = "auto"; 
+    };
+  }, [open]);
+
+  
+const handleToggle = () => {
+
+setOpen(!open)
+}
   return (
     <>
       <Head>
@@ -22,9 +42,10 @@ export default function Home() {
       </Head>
       <div className={`${styles.page} ${inter.variable}`}>
         {/* sidebar */}
-        <Sidebar />
+        <Sidebar open={open} handleToggle={handleToggle} />
         {/* main content */}
-        <Analyzer />
+        <Analyzer  open={open} handleToggle={handleToggle} />
+        
       </div>
     </>
   );

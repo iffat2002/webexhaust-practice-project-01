@@ -32,14 +32,16 @@ const menuItems = [
     content: "Referrals Content",
   },
 ];
-const Sidebar = () => {
+const Sidebar = ({open , handleToggle}) => {
   const [activeContent, setActiveContent] = useState("Analyzer Content");
   return (
-    <div className={styles.sidebar}>
+    <div className={`${styles.sidebar}  ${open && styles.show}`}>
       <div>
         <div className={styles.menu}>
-          <Image src="/images/logo.png" alt="logo" width={102} height={28} />
-          <Image src="/images/menu.svg" alt="logo" width={18} height={18} />
+          <Image className={styles.logo} src="/images/logo.png" alt="logo" width={102} height={28} />
+          <div className={styles.img_icon}>
+          {open ?  <Image onClick={handleToggle} src="/images/close.svg" alt="logo" width={18} height={18} /> :  <Image src="/images/menu.svg" alt="logo" width={18} height={18} />}
+          </div>
         </div>
         <div className={styles.mainMenu}>
           <h3 className={styles.regularTypo}>MAIN MENU</h3>
@@ -48,7 +50,7 @@ const Sidebar = () => {
               <li
                 key={item.text}
                 className={`${styles.menuItem} ${
-                  item.content === activeContent ? styles.activeMenu : ""
+                  item.content === activeContent ? styles.activeMenu : styles.inactive
                 } `}
                 onClick={() => setActiveContent(item.content)}
               >
@@ -67,7 +69,7 @@ const Sidebar = () => {
             width={16}
             height={16}
           />
-          <span className={styles.mediumTypo}>Settings</span>
+          <span className={`${styles.mediumTypo} ${styles.activecolor}`}>Settings</span>
         </div>
         <div className={`${styles.menuItem} ${styles.mt8}`}>
           <Image
@@ -76,7 +78,7 @@ const Sidebar = () => {
             width={16}
             height={16}
           />
-          <span className={styles.mediumTypo}>Help & Center</span>
+          <span className={`${styles.mediumTypo}  ${styles.activecolor}`}>Help & Center</span>
         </div>
         <div className={styles.profile}>
           <div className={` ${styles.flex} ${styles.gap10}`}>
@@ -101,7 +103,8 @@ const Sidebar = () => {
           />
         </div>
       </div>
-    </div>
+      </div>
+
   );
 };
 

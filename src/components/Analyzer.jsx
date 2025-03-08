@@ -1,10 +1,12 @@
 import React from "react";
+import Marquee from "react-fast-marquee";
 import styles from "@/styles/Home.module.css";
 import Image from "next/image";
 import Market from "./Market";
 import TopList from "./TopList";
+import BalanceHistory from "./BalanceHistory";
 
-const Analyzer = () => {
+const Analyzer = ({handleToggle, open}) => {
   const coins = [
     {
       name: "PONKEI",
@@ -35,10 +37,14 @@ const Analyzer = () => {
     },
   ];
   return (
-    <div className={styles.content}>
+    <div className={`${styles.content} ${open ? styles.hidden : ""}`}>
       {/* header */}
       <div className={styles.head}>
+        <div className={`${styles.flex} ${styles.gap18}`}>
+                  <Image onClick={handleToggle} src="/images/menu.svg" alt="logo" className={styles.menu__responsive} width={18} height={18} />
+        
         <Image src="/images/breadcrub.png" alt="logo" width={91} height={24} />
+        </div>
         <div className={`${styles.flex} ${styles.gap10}`}>
           <button
             className={`${styles.connectBtn} ${styles.btn} ${styles.semiboldTypo}`}
@@ -51,7 +57,7 @@ const Analyzer = () => {
             />
             Connect Wallet
           </button>
-          <div className={styles.wallet}>
+          <div className={`${styles.wallet} ${styles.hide}`}>
             <Image
               src="/images/notification.png"
               alt="wallet"
@@ -59,7 +65,7 @@ const Analyzer = () => {
               height={16}
             />
           </div>
-          <div className={styles.wallet}>
+          <div className={`${styles.wallet} ${styles.hide}`}>
             <Image
               src="/images/user-square.png"
               alt="wallet"
@@ -71,6 +77,7 @@ const Analyzer = () => {
       </div>
 
       {/* crypto coins */}
+      <Marquee>
       <div className={styles.crypto}>
         {coins.map((item) => (
           <div className={styles.coin}>
@@ -88,6 +95,7 @@ const Analyzer = () => {
           </div>
         ))}
       </div>
+      </Marquee>
       {/* data */}
 
       <div className={styles.data}>
@@ -98,7 +106,7 @@ const Analyzer = () => {
             className={styles.bar}
             placeholder="Enter Solana Wallet Address"
           />
-          <button className={`${styles.searchBtn} ${styles.btn}`}>
+          <button className={`${styles.searchBtn} ${styles.btn} ${styles.semiboldTypo}`}>
             Analyze
           </button>
         </div>
@@ -235,6 +243,8 @@ const Analyzer = () => {
         <Market />
         {/* lists */}
         <TopList />
+        {/* chart section */}
+        <BalanceHistory/>
       </div>
     </div>
   );
